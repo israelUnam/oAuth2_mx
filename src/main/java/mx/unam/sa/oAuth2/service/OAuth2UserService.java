@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -60,7 +59,6 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         user.setName(userInfoDto.getName());
         user.setUsername(userInfoDto.getEmail());
         user.setPicture(userInfoDto.getPicture());
-        user.setId(UUID.randomUUID());
         user.setEnabled(true);
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
@@ -81,7 +79,6 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             user.setPhone(additionalDetails.getPhoneNumber());
             user.setAddress(additionalDetails.getAddress());
             Authority authority = new Authority();
-            authority.setId(UUID.randomUUID());
             authority.setAuthority(additionalDetails.getAuthority().getAuthority());
             authority = authorityRepository.save(authority);
             user.setAuthorities(Set.of(authority));

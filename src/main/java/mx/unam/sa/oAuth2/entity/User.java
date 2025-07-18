@@ -5,9 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Set;
-import java.util.UUID;
+
 
 @Data
 @Entity
@@ -15,16 +14,15 @@ import java.util.UUID;
 public class User implements UserDetails {
 
     @Id
-    @JdbcTypeCode(java.sql.Types.VARCHAR)
-    private UUID id;
+    @JdbcTypeCode(java.sql.Types.INTEGER)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @OneToMany
     private Set<Authority> authorities;
 
     private String password;
-
     private String name;
-
     private String picture;
 
     @Column(unique = true)
@@ -32,14 +30,9 @@ public class User implements UserDetails {
     private String phone;
     private String address;
     private boolean accountNonExpired;
-
     private boolean accountNonLocked;
-
     private boolean credentialsNonExpired;
-
     private String provider;
-
     private String providerId;
-
     private boolean enabled;
 }
