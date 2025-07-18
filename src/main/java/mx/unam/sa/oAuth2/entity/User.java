@@ -16,7 +16,7 @@ public class User implements UserDetails {
     @Id
     @JdbcTypeCode(java.sql.Types.INTEGER)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @OneToMany
     private Set<Authority> authorities;
@@ -27,8 +27,6 @@ public class User implements UserDetails {
 
     @Column(unique = true)
     private String username;
-    private String phone;
-    private String address;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;

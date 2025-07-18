@@ -18,10 +18,10 @@ public class CustomOauth2SuccessHandler implements AuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("Authentication success for user: {}", authentication.getName());
         try {
-            response.sendRedirect("/complete-registration");
-            log.info("Redirecting to /complete-registration");
+            response.sendRedirect("/");
+            log.info("Redirecting to /");
         } catch (Exception e) {
-            log.error("Error during redirecting to /complete-registration", e);
+            log.error("Error during redirecting to /", e);
             throw e;
         }
     }

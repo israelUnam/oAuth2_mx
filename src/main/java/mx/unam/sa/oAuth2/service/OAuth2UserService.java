@@ -76,8 +76,6 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         Optional<User> userOptional = userRepository.findByUsername(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            user.setPhone(additionalDetails.getPhoneNumber());
-            user.setAddress(additionalDetails.getAddress());
             Authority authority = new Authority();
             authority.setAuthority(additionalDetails.getAuthority().getAuthority());
             authority = authorityRepository.save(authority);

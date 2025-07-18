@@ -27,13 +27,7 @@ public class HomeController {
             model.addAttribute("name", principal.getAttribute("name"));
             model.addAttribute("email", principal.getAttribute("email"));
             model.addAttribute("picture", principal.getAttribute("picture"));
-
-
             User user = oAuth2UserService.getUserByUsername(principal.getAttribute("email"));
-
-            model.addAttribute("phone", user.getPhone());
-            model.addAttribute("address", user.getAddress());
-
             user.getAuthorities().forEach(authority -> {
                 model.addAttribute("authority", authority.getAuthority());
             });

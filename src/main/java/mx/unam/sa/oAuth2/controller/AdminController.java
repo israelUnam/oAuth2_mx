@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/admin")
 public class AdminController {
     
-    @PreAuthorize("hasAuthority('MASTER')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/")
     public String getUsers() {
         
