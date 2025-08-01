@@ -1,4 +1,4 @@
-package  mx.unam.sa.oAuth2.config;
+package mx.unam.sa.oAuth2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +9,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,23 +22,30 @@ import lombok.extern.slf4j.Slf4j;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService;
-    private final CustomOauth2SuccessHandler CustomOauth2SuccessHandler;
+        private final OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService;
+        private final CustomOauth2SuccessHandler customOauth2SuccessHandler;
+        private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        log.trace("Configuring http filterChain");
-        http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/css/**", "/js/**", "/images/**").permitAll()
-                        .anyRequest().authenticated())
-                .oauth2Login(
-                        oauth2 -> oauth2.userInfoEndpoint(infoEndpoint -> infoEndpoint.userService(oAuth2UserService))
-                                .successHandler(CustomOauth2SuccessHandler)
-                                .loginPage("/login"));
-        return http.build();
-    }
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+                log.trace("Configuring http filterChain");
+                http
+                                .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers("/login", "/css/**", "/js/**", "/images/**")
+                                                .permitAll()
+                                                .anyRequest().authenticated())
+                                .oauth2Login(
+                                                oauth2 -> oauth2.userInfoEndpoint(infoEndpoint -> infoEndpoint
+                                                                .userService(oAuth2UserService))
+                                                                .successHandler(customOauth2SuccessHandler)
+                                                                .loginPage("/login"))
+                                .logout(logout -> logout
+                                                .logoutSuccessUrl("/login??logout")
+                                                .logoutSuccessHandler(customLogoutSuccessHandler)
+                                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                                                .permitAll());
 
-   
+                return http.build();
+        }
 
 }

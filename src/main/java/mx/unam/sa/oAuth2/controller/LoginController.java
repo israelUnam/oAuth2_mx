@@ -5,6 +5,8 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
+
 @Controller
 public class LoginController {
     @GetMapping("/login")
@@ -14,4 +16,5 @@ public class LoginController {
         }
         return "login";
     }
+    
 }
