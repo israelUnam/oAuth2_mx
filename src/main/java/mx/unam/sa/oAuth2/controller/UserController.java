@@ -1,20 +1,16 @@
 package mx.unam.sa.oAuth2.controller;
 
-import mx.unam.sa.oAuth2.dto.AdditionalDetailsDto;
-import mx.unam.sa.oAuth2.service.OAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class UserController {
-    private final OAuth2UserService oAuth2UserService;
 
     @GetMapping("/home")
     public String sayHello(Authentication authentication, Model model) {
